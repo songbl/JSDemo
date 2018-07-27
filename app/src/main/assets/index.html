@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>标题</title>
+    <style>
+            /*标签选择器*/
+            body {
+                background: #469EFF;
+            }
+            p {
+                color: #fff;
+                font-size: 20px;
+            }
+            .tips {
+                border: 1px #ff0 solid;
+                padding: 10px;
+            }
+            div {
+                color: #ff0;
+                font-size: 20px;
+                border: 2px green dashed;
+                padding: 10px;
+            }
+
+
+
+    </style>
+</head>
+<body>
+<p class="tips">Android与JS交互实例</p>
+<!--p表示段落-->
+<p>功能一:点击Android里的按钮,改变以下的文字内容</p>
+
+<!--容器,里面可以放很多别的标签-->
+<div id="divChange">
+    这里是等待改变的内容...
+</div>
+
+<p>功能二:在js里面调用Android里的无参方法</p>
+
+<div id="showToast">点我弹Toast</div>
+
+<p>功能三:在js里面调用Android里的有参方法</p>
+<div id="showToastWithParams">点我弹带参数的Toast</div>
+
+<script>
+            var isAndroid = "初始值..";
+
+            /*在这里就可以进行js代码的书写了.*/
+            function changeDivContent(){
+                /*根据id找到某个标签*/
+                var div=document.getElementById("divChange");
+
+
+                div.innerHTML="哈哈,把你改变了...";
+
+                var argsIndex = window.location.href.split("type=");
+                var arg = argsIndex[1];
+                 div.innerHTML=arg+"asdfs";
+                isAndroid  = "Js的msg...";
+            }
+            /*得到div标签*/
+            var showToast=document.getElementById("showToast");
+            /*处理div的点击事件*/
+            showToast.onclick=function(){
+                mAndroid.showToast();
+            }
+            var showToastWithParams=document.getElementById("showToastWithParams");
+            showToastWithParams.onclick=function(){
+                mAndroid.showToastWithParams(isAndroid);
+            }
+
+            var showTestActivity = document.getElementById("showTestActivity");
+            showTestActivity.onclick = function(){
+                if (navigator.userAgent.match(/Chrome/)) {
+                     mAndroid.showToastWithParams("chrome");
+                } else if (navigator.userAgent.match(/Firefox/)) {
+                     mAndroid.showToastWithParams("Firefox");
+                } else {
+                     mAndroid.showToastWithParams("other");
+                }
+               // mAndroid.showToast();
+                document.location = testActivityLocation;
+            }
+
+</script>
+</body>
+</html>
