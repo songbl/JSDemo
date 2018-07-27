@@ -1,8 +1,8 @@
 package com.sbl.myapplication;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btCallJS ;
-    WebView webView ;
+    Button btCallJS;
+    WebView webView;
 
     @SuppressLint("AddJavascriptInterface")
     @Override
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btCallJS =  findViewById(R.id.bt_js);
+        btCallJS = findViewById(R.id.bt_js);
 
         webView = findViewById(R.id.wv);
 
@@ -32,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
         webView.loadUrl("file:///android_asset/index.html");
 
 
-        // 添加js的接口.mAndroid是随便写的,代表了当前这个Activity.
+        /**
+         * 添加javascriptInterface
+         * 第一个参数：这里需要一个与js映射的java对象
+         * 第二个参数：该java对象被映射为js对象后在js里面的对象名，在js中要调用该对象的方法就是通过这个来调用
+         */
         webView.addJavascriptInterface(this, "mAndroid");
         //实现Android调用js里的函数
         btCallJS.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +48,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //java可以根据字节码进行反射.
-    //一旦添加JavascriptInterface注解后,就不能在js里面执行反射的功能了.
-    //供js调用的方法,必须添加JavascriptInterface注解.
+    /**
+     * java可以根据字节码进行反射.
+     * 一旦添加JavascriptInterface注解后,就不能在js里面执行反射的功能了.
+     * 4.2及以上api与JavaScript交互时需要在方法上添加注解@JavascriptInterface 。
+     */
+
     @JavascriptInterface
     public void showToast() {
         runOnUiThread(new Runnable() {
